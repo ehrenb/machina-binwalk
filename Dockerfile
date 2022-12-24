@@ -7,19 +7,12 @@ RUN pip3 install --trusted-host pypi.org \
                 -r /tmp/requirements.txt
 RUN rm /tmp/requirements.txt
 
+ENV DEBIAN_FRONTEND noninteractive
 
-# install Binwalk
+RUN apt update &&\
+    apt install -y binwalk
 
-RUN wget https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip -P /machina &&\
-    cd /machina && unzip v2.3.3.zip
-
-# dep.sh requires 'python' to exist, not just 'python3'
-RUN ln -s $(which python3) /usr/bin/python
-RUN cd /machina/binwalk-2.3.3 &&\
-    ./deps.sh --yes &&\
-    python3 setup.py install
-
-COPY Binwalk.json /schemas/
+COPY BinwalkAnalysis.json /schemas/
 
 COPY src /machina/src
 
