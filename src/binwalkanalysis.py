@@ -35,18 +35,11 @@ class BinwalkAnalysis(Worker):
 
             for result in module.results:
                 if result.file.path in module.extractor.output:
-                    # These are files that binwalk carved out of the original firmware image, a la dd
-                    # if result.offset in module.extractor.output[result.file.path].carved:
-                    #     print(f"Carved data from offset 0x%X to %s" % (result.offset, module.extractor.output[result.file.path].carved[result.offset])
-                    # These are files/directories created by extraction utilities (gunzip, tar, unsquashfs, etc)
                     if result.offset in module.extractor.output[result.file.path].extracted:
-                        # print "Extracted %d files from offset 0x%X to '%s' using '%s'" % (len(module.extractor.output[result.file.path].extracted[result.offset].files),
-                        #                                                                 result.offset,
-                        #                                                                 module.extractor.output[result.file.path].extracted[result.offset].files[0],
-                        #                                                                 module.extractor.output[result.file.path].extracted[result.offset].command)
-                        files = module.extractor.output[result.file.path].extracted[result.offset].files
 
+                        files = module.extractor.output[result.file.path].extracted[result.offset].files
                         flattened_extracted_files = []
+
                         for f in files:
 
                             # if directory was extracted, recursively collect all files 
@@ -64,7 +57,7 @@ class BinwalkAnalysis(Worker):
                             
                             self.logger.info(f"publishing {f} to Identifier")
 
-                            # Send each internal file to Identifier for analysis
+                            # Send each extracted file to Identifier for analysis
                             data_encoded = base64.b64encode(fdata).decode()
                             body = json.dumps({
                                     "data": data_encoded,
