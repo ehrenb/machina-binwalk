@@ -10,7 +10,10 @@ import binwalk
 
 class BinwalkAnalysis(Worker):
     types = [
-        'jffs2'
+        'jffs2',
+        'squashfs',
+        'lzma',
+        'cpio'
     ]
     next_queues = ['Identifier']
 
@@ -70,4 +73,5 @@ class BinwalkAnalysis(Worker):
                             self.publish_next(body)
                             
                         # cleanup root directory
-                        shutil.rmtree(files[0])
+                        parent_dir = Path(files[0]).parent
+                        shutil.rmtree(parent_dir)
