@@ -67,7 +67,7 @@ class BinwalkAnalysis(Worker):
                                     "origin": {
                                         "ts": data['ts'],
                                         "md5": data['hashes']['md5'],
-                                        "id": data['id'], #I think this is the only field needed, we can grab the unique node based on id alone
+                                        "uid": data['uid'],
                                         "type": data['type']}
                                     })
                             self.publish_next(body)
