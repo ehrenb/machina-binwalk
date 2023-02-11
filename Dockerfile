@@ -18,14 +18,14 @@ RUN ln -s $(which python3) /usr/bin/python
 # that applies this fix: https://github.com/devttys0/sasquatch/issues/48#issuecomment-1267506233
 COPY deps.sh /tmp/
 RUN chmod +x /tmp/deps.sh
-RUN wget https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.3.zip -P /machina &&\
-    cd /machina && unzip v2.3.3.zip
+RUN wget https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.4.zip -P /machina &&\
+    cd /machina && unzip v2.3.4.zip
 
 # execute patched deps.sh
 RUN cd /tmp && ./deps.sh --yes
 
 # install binwalk python api
-RUN cd /machina/binwalk-2.3.3 &&\
+RUN cd /machina/binwalk-2.3.4 &&\
     python3 setup.py install
 
 COPY BinwalkAnalysis.json /schemas/
