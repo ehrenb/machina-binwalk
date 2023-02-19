@@ -22,7 +22,7 @@ RUN wget https://github.com/ReFirmLabs/binwalk/archive/refs/tags/v2.3.4.zip -P /
     cd /machina && unzip v2.3.4.zip
 
 # execute patched deps.sh
-RUN cd /tmp && ./deps.sh --yes
+RUN cd /tmp && apt update && ./deps.sh --yes
 
 # install binwalk python api
 RUN cd /machina/binwalk-2.3.4 &&\
